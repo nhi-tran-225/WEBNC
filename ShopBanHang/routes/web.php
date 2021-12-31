@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryProduct;
 use App\Http\Controllers\BrandProduct;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,17 @@ use App\Http\Controllers\ProductController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//front-end
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/trang-chu', [HomeController::class, 'index']);
+Route::post('/tim-kiem', [HomeController::class, 'tim_kiem']);
+//Danh mục sản phẩm - trang chủ
+Route::get('/danh-muc-san-pham/{category_id}', [CategoryProduct::class, 'showCategoryHome']);
+//Thương hiệu sản phẩm - trang chủ
+Route::get('/thuong-hieu-san-pham/{brand_id}', [BrandProduct::class, 'showBrandHome']);
+//chi tiết sản phẩm
+Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'detailProduct']);
+
 
 
 //back-end
@@ -55,3 +67,22 @@ Route::get('/active-brand-product/{brand_product_id}', [BrandProduct::class, 'ac
 
 Route::post('/save-brand-product', [BrandProduct::class, 'save_brand_product']);
 Route::post('/update-brand-product/{category_brand_id}', [BrandProduct::class, 'update_brand_product']);
+
+//cart
+Route::post('/save-cart', [CartController::class, 'save_cart']);
+Route::get('/show-cart', [CartController::class, 'show_cart']);
+Route::get('/delete-to-cart/{rowId}', [CartController::class, 'delete_to_cart']);
+
+Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity']);
+
+//Product
+Route::get('/add-product', [ProductController::class, 'add_product']);
+Route::get('/edit-product/{product_id}', [ProductController::class, 'edit_product']);
+Route::get('/delete-product/{product_id}', [ProductController::class, 'delete_product']);
+Route::get('/all-product', [ProductController::class, 'all_product']);
+
+Route::get('/unactive-product/{product_id}', [ProductController::class, 'unactive_product']);
+Route::get('/active-product/{product_id}', [ProductController::class, 'active_product']);
+
+Route::post('/save-product', [ProductController::class, 'save_product']);
+Route::post('/update-product/{product_id}', [ProductController::class, 'update_product']);
